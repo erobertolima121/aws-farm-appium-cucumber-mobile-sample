@@ -1,3 +1,4 @@
+#Launch Appium CommandLine
 #!/bin/bash
 
 function die {
