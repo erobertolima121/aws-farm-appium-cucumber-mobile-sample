@@ -15,17 +15,19 @@
 
 package Tests.AbstractBaseTests;
 
-import cucumber.api.testng.AbstractTestNGCucumberTests;
-
-import Pages.NavigationPage;
-import io.appium.java_client.MobileElement;
-import io.appium.java_client.android.AndroidDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.testng.annotations.*;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
+
+import cucumber.api.testng.AbstractTestNGCucumberTests;
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.AndroidDriver;
 
 /**
  * An abstract base for all of the Android tests within this package
@@ -33,12 +35,9 @@ import java.util.concurrent.TimeUnit;
  * Responsible for setting up the Appium test Driver
  */
 public abstract class TestBase extends AbstractTestNGCucumberTests {
-    /**
-     * Make the driver static. This allows it to be created only once
-     * and used across all of the test classes.
-     */
-    public static AndroidDriver<MobileElement> driver;
 
+    public static AndroidDriver<MobileElement> driver;
+    
     /**
      * This allows the navigation to work within the app.
      * The category name is returned so we can navigate to it from the navigation
@@ -46,18 +45,19 @@ public abstract class TestBase extends AbstractTestNGCucumberTests {
      *
      * @return The name of the Android category
      */
-    public abstract String getName();
+    //public abstract String getName();
 
     /**
      * A page containing the navigation drawer
      */
-    private NavigationPage navigationPage;
+    //private NavigationPage navigationPage;
 
     /**
      * Method to initialize the test's page
      */
     @BeforeTest
-    public abstract void setUpPage();
+    public void setUpPage() {
+	}
 
     /**
      * This method runs before any other method.
@@ -71,6 +71,7 @@ public abstract class TestBase extends AbstractTestNGCucumberTests {
      *
      * @throws MalformedURLException An exception that occurs when the URL is wrong
      */
+
     @BeforeSuite
     public void setUpAppium() throws MalformedURLException {
 
@@ -84,9 +85,9 @@ public abstract class TestBase extends AbstractTestNGCucumberTests {
         //Set the DesiredCapabilities capabilities only for local development
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability("deviceName", "Android Emulator");
-        capabilities.setCapability("appPackage", "com.amazonaws.devicefarm.android.referenceapp");
-        capabilities.setCapability("appActivity", "com.amazonaws.devicefarm.android.referenceapp.Activities.MainActivity");
-        capabilities.setCapability("udid", "emulator-5554");
+        capabilities.setCapability("appPackage", "com.ebay.mobile");
+        capabilities.setCapability("appActivity", "com.ebay.mobile.activities.MainActivity");
+        //capabilities.setCapability("udid", "emulator-5554");
 
         driver = new AndroidDriver<MobileElement>(url, capabilities);
 
@@ -108,11 +109,11 @@ public abstract class TestBase extends AbstractTestNGCucumberTests {
      *  within the navigation drawer
      *
      */
-    @BeforeClass
-    public void navigateTo() throws InterruptedException {
-        navigationPage = new NavigationPage(driver);
-        navigationPage.gotoCategory(getName());
-    }
+    //@BeforeClass
+    //public void navigateTo() throws InterruptedException {
+    //    navigationPage = new NavigationPage(driver);
+    //    navigationPage.gotoCategory(getName());
+    //}
 
     /**
      * Restart the app after every test class to go back to the main
