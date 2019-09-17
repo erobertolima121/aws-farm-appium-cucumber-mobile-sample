@@ -15,18 +15,14 @@
 
 package Tests;
 
-import java.util.List;
-
-import org.openqa.selenium.By;
 import org.testng.Assert;
 
+import Pages.InitialPage;
 import Tests.AbstractBaseTests.TestBase;
 import cucumber.api.CucumberOptions;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import io.appium.java_client.MobileBy;
-import io.appium.java_client.MobileElement;
 
 @CucumberOptions(
         strict = true,
@@ -35,6 +31,7 @@ import io.appium.java_client.MobileElement;
         plugin = {"pretty"}
 )
 public class InicialTest extends TestBase {
+	
 	
 	public void esperar(long tempo) {
 		try {
@@ -47,21 +44,19 @@ public class InicialTest extends TestBase {
 
     @Given("^que estou na pagina inicial$")
     public void paginaInicial() throws InterruptedException {
-    	MobileElement pageinicial = driver.findElement(MobileBy.className("android.widget.TextView"));
-		String inicial = pageinicial.getText();
-		Assert.assertEquals("Pesquise o que quiser", inicial);
+    	InitialPage initialPage = new InitialPage();
+		Assert.assertEquals("Pesquise o que quiser", initialPage.verificaInicial());
 		}
 
     @When("^tocar no botao vendas$")
     public void tocarBotaoVendas() throws InterruptedException {
-    	List<MobileElement> elementosencontrados = driver.findElements(By.className("android.widget.TextView"));
-		elementosencontrados.get(1).click();
+    	InitialPage clicavendas = new InitialPage();
+    	clicavendas.clicaVendasInicial();
     }
 
     @Then("^posso verificar a pagina de vendas$")
     public void verificarTituloVendas() throws InterruptedException {
-    	MobileElement pagevenda = driver.findElement(MobileBy.className("android.widget.TextView"));
-		String venda = pagevenda.getText();
-		Assert.assertEquals("Vendas", venda);
+    	InitialPage verificatitulo = new InitialPage();
+		Assert.assertEquals("Vendas", verificatitulo.capturaTituloPagina());
     }
 }
