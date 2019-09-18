@@ -84,10 +84,12 @@ public abstract class TestBase extends AbstractTestNGCucumberTests {
 
         //Set the DesiredCapabilities capabilities only for local development
         capabilities.setCapability("platformName", "Android");
-        capabilities.setCapability("deviceName", "Android Emulator");
+        //capabilities.setCapability("deviceName", "Android Emulator"); //Executando no emulador AVD
+        capabilities.setCapability("deviceName", "Moto G"); //Executando no dispositivo fisico
+        capabilities.setCapability("udid", "0032268348"); //Id recuperado atraves do adb devices
         capabilities.setCapability("appPackage", "com.ebay.mobile");
         capabilities.setCapability("appActivity", "com.ebay.mobile.activities.MainActivity");
-        //capabilities.setCapability("udid", "emulator-5554");
+        
 
         driver = new AndroidDriver<MobileElement>(url, capabilities);
 
