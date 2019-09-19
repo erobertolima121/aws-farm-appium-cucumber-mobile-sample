@@ -26,4 +26,9 @@ public class InitialPage extends TestBase {
 		String titulopagina = capturatitulo.getText();
 		return titulopagina;
 	}
+	
+	public void clicaOfertasInicial() throws InterruptedException {
+		List<MobileElement> elementosencontrados = driver.findElements(By.className("android.widget.TextView"));
+		elementosencontrados.get(2).click();
+	}
 }

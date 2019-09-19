@@ -18,6 +18,7 @@ package Tests;
 import org.testng.Assert;
 
 import Pages.InitialPage;
+import Pages.VendasPage;
 import Tests.AbstractBaseTests.TestBase;
 import cucumber.api.CucumberOptions;
 import cucumber.api.java.en.Given;
@@ -27,11 +28,11 @@ import cucumber.api.java.en.When;
 @CucumberOptions(
         strict = true,
         monochrome = true,
-        features = "classpath:Features/InicialTest.feature",
+        features = "classpath:Features/VendasTest.feature",
         plugin = {"pretty"}
 )
 
-public class InicialTest extends TestBase {
+public class VendasTest extends TestBase {
 	
 	
 	public void esperar(long tempo) {
@@ -41,36 +42,22 @@ public class InicialTest extends TestBase {
 			e.printStackTrace();
 		}
 	}	
-	
-    @Given("^que estou na pagina inicial$")
-    public void paginaInicial() throws InterruptedException {
-    	InitialPage initialPage = new InitialPage();
-		Assert.assertEquals("Pesquise o que quiser", initialPage.verificaInicial());
-		}
-
-    @When("^tocar no botao vendas$")
+    
+    @Given("^realizo o toque no botao vendas$")
     public void tocarBotaoVendas() throws InterruptedException {
     	InitialPage clicavendas = new InitialPage();
     	clicavendas.clicaVendasInicial();
     }
 
-    @Then("^posso verificar a pagina de vendas$")
+    @When("^tocar no botao para colocar um item para venda$")
+    public void tocarBotaoItemVendas() throws InterruptedException {
+    	VendasPage clicaitemvendas = new VendasPage();
+    	clicaitemvendas.clicaBotaoItemVendas();
+    }
+
+    @Then("^posso verificar a mensagem para login$")
     public void verificarTituloVendas() throws InterruptedException {
-    	InitialPage verificatitulo = new InitialPage();
-		Assert.assertEquals("Vendas", verificatitulo.capturaTituloPagina());
-		driver.resetApp();
+    	VendasPage verificamsglogin = new VendasPage();
+		Assert.assertEquals("Você pode usar seu e-mail ou nome de usuário, ou continuar com sua conta de rede social.", verificamsglogin.capturaMsgLogin());
     }
-    
-    @When("^tocar no botao ofertas$")
-    public void tocarBotaoOfertas() throws InterruptedException {
-    	InitialPage clicaofertas = new InitialPage();
-    	clicaofertas.clicaOfertasInicial();
-    }
-
-    @Then("^posso verificar a pagina de ofertas$")
-    public void verificarTituloOfertas() throws InterruptedException {
-    	InitialPage tituloofertas = new InitialPage();
-		Assert.assertEquals("Ofertas", tituloofertas.capturaTituloPagina());
-    }
-
 }

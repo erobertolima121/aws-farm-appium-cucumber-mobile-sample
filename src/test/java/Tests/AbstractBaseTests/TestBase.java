@@ -38,21 +38,7 @@ public abstract class TestBase extends AbstractTestNGCucumberTests {
 
     public static AndroidDriver<MobileElement> driver;
     
-    /**
-     * This allows the navigation to work within the app.
-     * The category name is returned so we can navigate to it from the navigation
-     * drawer.
-     *
-     * @return The name of the Android category
-     */
-    //public abstract String getName();
-
-    /**
-     * A page containing the navigation drawer
-     */
-    //private NavigationPage navigationPage;
-
-    /**
+     /**
      * Method to initialize the test's page
      */
     @BeforeTest
@@ -84,9 +70,9 @@ public abstract class TestBase extends AbstractTestNGCucumberTests {
 
         //Set the DesiredCapabilities capabilities only for local development
         capabilities.setCapability("platformName", "Android");
-        //capabilities.setCapability("deviceName", "Android Emulator"); //Executando no emulador AVD
-        capabilities.setCapability("deviceName", "Moto G"); //Executando no dispositivo fisico
-        capabilities.setCapability("udid", "0032268348"); //Id recuperado atraves do adb devices
+        capabilities.setCapability("deviceName", "Android Emulator"); //Executando no emulador AVD
+        //capabilities.setCapability("deviceName", "Moto G"); //Executando no dispositivo fisico
+        //capabilities.setCapability("udid", "0032268348"); //Id recuperado atraves do adb devices
         capabilities.setCapability("appPackage", "com.ebay.mobile");
         capabilities.setCapability("appActivity", "com.ebay.mobile.activities.MainActivity");
         
@@ -104,19 +90,6 @@ public abstract class TestBase extends AbstractTestNGCucumberTests {
     public void tearDownAppium() {
         driver.quit();
     }
-
-    /**
-     *
-     *  Creates a navigation page and navigates to the Class' category
-     *  within the navigation drawer
-     *
-     */
-    //@BeforeClass
-    //public void navigateTo() throws InterruptedException {
-    //    navigationPage = new NavigationPage(driver);
-    //    navigationPage.gotoCategory(getName());
-    //}
-
     /**
      * Restart the app after every test class to go back to the main
      * screen and to reset the behavior
