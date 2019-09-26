@@ -26,49 +26,28 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 
 import cucumber.api.testng.AbstractTestNGCucumberTests;
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 
-/**
- * An abstract base for all of the Android tests within this package
- *
- * Responsible for setting up the Appium test Driver
- */
 public abstract class TestBase extends AbstractTestNGCucumberTests {
 
-    public static AndroidDriver<MobileElement> driver;
+    public static AppiumDriver<MobileElement> driver;
     
-     /**
-     * Method to initialize the test's page
-     */
     @BeforeTest
     public void setUpPage() {
+    	
 	}
 
-    /**
-     * This method runs before any other method.
-     *
-     * Appium follows a client - server model:
-     * We are setting up our appium client in order to connect to Device Farm's appium server.
-     *
-     * We do not need to and SHOULD NOT set our own DesiredCapabilities
-     * Device Farm creates custom settings at the server level. Setting your own DesiredCapabilities
-     * will result in unexpected results and failures.
-     *
-     * @throws MalformedURLException An exception that occurs when the URL is wrong
-     */
-
     @BeforeSuite
-    public void setUpAppium() throws MalformedURLException {
+    public void Android_setUpAppium() throws MalformedURLException {
 
         final String URL_STRING = "http://127.0.0.1:4723/wd/hub";
-
         URL url = new URL(URL_STRING);
 
-        //Use a empty DesiredCapabilities object
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
-        //Set the DesiredCapabilities capabilities only for local development
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability("deviceName", "Android Emulator"); //Executando no emulador AVD
         //capabilities.setCapability("deviceName", "Moto G"); //Executando no dispositivo fisico
@@ -76,24 +55,32 @@ public abstract class TestBase extends AbstractTestNGCucumberTests {
         capabilities.setCapability("appPackage", "com.ebay.mobile");
         capabilities.setCapability("appActivity", "com.ebay.mobile.activities.MainActivity");
         
-
         driver = new AndroidDriver<MobileElement>(url, capabilities);
+        driver.manage().timeouts().implicitlyWait(35, TimeUnit.SECONDS);
+    }
+    
+    public void IOS_setUpAppium() throws MalformedURLException {
 
-        //Use a higher value if your mobile elements take time to show up
+        final String URL_STRING = "http://127.0.0.1:4723/wd/hub";
+        URL url = new URL(URL_STRING);
+
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+
+        capabilities.setCapability("platformName", "IOS");
+        capabilities.setCapability("deviceName", "IPhone 8");
+        capabilities.setCapability("platformVersion", "11.3");
+        capabilities.setCapability("bundleId", "com.ebay.mobile");
+        
+        driver = new IOSDriver<MobileElement>(url, capabilities);
         driver.manage().timeouts().implicitlyWait(35, TimeUnit.SECONDS);
     }
 
-    /**
-     * Always remember to quit
-     */
+
     @AfterSuite
     public void tearDownAppium() {
         driver.quit();
     }
-    /**
-     * Restart the app after every test class to go back to the main
-     * screen and to reset the behavior
-     */
+    
     @AfterClass
     public void restartApp() {
         driver.resetApp();

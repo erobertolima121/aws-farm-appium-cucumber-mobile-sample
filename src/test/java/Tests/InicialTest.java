@@ -17,6 +17,7 @@ package Tests;
 
 import org.testng.Assert;
 
+import Hooks.LerDocumentos;
 import Pages.InitialPage;
 import Tests.AbstractBaseTests.TestBase;
 import cucumber.api.CucumberOptions;
@@ -62,9 +63,13 @@ public class InicialTest extends TestBase {
     }
     
     @When("^tocar no botao ofertas$")
-    public void tocarBotaoOfertas() throws InterruptedException {
+    public void tocarBotaoOfertas() throws Exception {
     	InitialPage clicaofertas = new InitialPage();
     	clicaofertas.clicaOfertasInicial();
+    	LerDocumentos lerdoc = new LerDocumentos();
+    	System.out.println(lerdoc.lerdoctxt());
+    	LerDocumentos lerallcsv = new LerDocumentos();
+    	System.out.println(lerallcsv.leralldoccsv());
     }
 
     @Then("^posso verificar a pagina de ofertas$")
